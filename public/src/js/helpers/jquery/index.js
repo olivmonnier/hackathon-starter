@@ -1,9 +1,17 @@
+import './jquery.base64decode';
+import './jquery.base64encode';
 import './jquery.fn.checked';
 import './jquery.fn.disabled';
 import './jquery.fn.exists';
 import './jquery.fn.gotop';
 import './jquery.fn.replaceclass';
 import './jquery.fn.serializejson';
+import './jquery.fn.tagname';
+import './jquery.hextorgb';
+import './jquery.rgbtohex';
+import './jquery.topic';
 import './jquery.uri';
 import './jquery.urlhash';
 import './jquery.urlparams';
+import './jquery.utf8decode';
+import './jquery.utf8encode';
