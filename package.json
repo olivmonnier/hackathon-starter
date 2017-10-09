@@ -12,6 +12,7 @@
     "start": "node app.js",
     "test": "mocha --reporter spec",
     "postinstall": "gulp build",
+    "dev": "gulp server",
     "eslint": "eslint **/*.js"
   },
   "dependencies": {
