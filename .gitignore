@@ -15,6 +15,12 @@ tmp
 
 #Build
 public/css/main.css
+public/css/main.css.map
+public/js/main.js
+public/js/main.js.map
+public/js/vendors.js
+public/js/vendors.js.map
+public/fonts
 
 # API keys and secrets
 .env
