@@ -6,6 +6,7 @@ const cleanCss = require('gulp-clean-css');
 const gulpif = require('gulp-if');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
+const imagemin = require('gulp-imagemin');
 const gls = require('gulp-live-server');
 const del = require('del');
 const babelify = require('babelify');
@@ -13,12 +14,18 @@ const browserify = require('browserify');
 const buffer = require('vinyl-buffer');
 const source = require('vinyl-source-stream');
 const runSequence = require('run-sequence');
+const wbBuild = require('workbox-build');
 
 const isEnvProduction = process.NODE_ENV === 'production';
 
 const dirs = {
   src: 'public/src',
   dest: 'public/dist'
+}
+
+const imagesPath = {
+  src: `${dirs.src}/images/**/*`,
+  dest: `${dirs.dest}/images/`
 }
 
 const sassPaths = {
@@ -57,6 +64,12 @@ gulp.task('clean', () => {
   return del(cleanFolders)
 })
 
+gulp.task('images', () => {
+  return gulp.src(imagesPath.src)
+    .pipe(imagemin())
+    .pipe(gulp.dest(imagesPath.dest))
+})
+
 gulp.task('styles', () => {
   return gulp.src(sassPaths.src)
     .pipe(sourcemaps.init())
@@ -93,6 +106,24 @@ gulp.task('vendors', () => {
     .pipe(gulp.dest(jsPaths.dest))
 })
 
+gulp.task('bundle-sw', () => {
+  return wbBuild.generateSW({
+    globDirectory: './public/dist/',
+    swDest: './public/dist/sw.js',
+    globPatterns: ['**\/*.{html,js,css}'],
+    //globIgnores: ['admin.html'],
+    templatedUrls: {
+      '/shell': ['shell.hbs', 'main.css', 'shell.css']
+    }
+  })
+  .then(() => {
+    console.log('Service worker generated.');
+  })
+  .catch((err) => {
+    console.log('[ERROR] This happened: ' + err);
+  });
+})
+
 gulp.task('fonts:fontAwesome', () => {
   return gulp.src(fontsPaths.fontAwesome.src)
     .pipe(gulp.dest(fontsPaths.fontAwesome.dest))
@@ -116,6 +147,7 @@ gulp.task('server', ['build'], () => {
 gulp.task('build', () => {
   return runSequence(
     'clean', 
-    ['vendors', 'fonts', 'styles', 'js']
+    ['images', 'vendors', 'fonts', 'styles', 'js'],
+    'bundle-sw'
   )}
 );
