@@ -1,0 +1,7 @@
+$fa-font-path: "/css/fonts/fontAwesome/";
+$icon-font-path: "/css/fonts/bootstrap/";
+
+@import "../../node_modules/bootswatch/lumen/variables";
+@import "../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "../../node_modules/bootswatch/lumen/bootswatch";
+@import "../../node_modules/font-awesome/scss/font-awesome";

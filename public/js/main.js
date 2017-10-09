@@ -1,5 +1,2 @@
-$(document).ready(function() {
-
-  // Place JavaScript code here...
-
-});
+"use strict";
+//# sourceMappingURL=main.js.map
