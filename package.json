@@ -21,6 +21,7 @@
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
     "bootstrap-sass": "^3.3.7",
+    "bootstrap-social": "^5.1.1",
     "bootswatch": "^3.3.7",
     "chalk": "^2.1.0",
     "cheerio": "^1.0.0-rc.2",

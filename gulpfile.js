@@ -107,7 +107,10 @@ gulp.task('fonts', ['fonts:fontAwesome', 'fonts:bootstrap'])
 
 gulp.task('server', ['build'], () => {
   const server = gls.new('./app.js')
-  return server.start();
+
+  server.start()
+  gulp.watch(`${dirs.src}/sass/**/*.scss`, ['styles'])
+  gulp.watch(`${dirs.src}/js/src/**/*.js`, ['js'])
 })
 
 gulp.task('build', () => {
