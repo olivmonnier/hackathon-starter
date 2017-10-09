@@ -18,12 +18,14 @@
   "dependencies": {
     "babel-core": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
+    "babelify": "^7.3.0",
     "bcrypt-nodejs": "^0.0.3",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
     "bootstrap-sass": "^3.3.7",
     "bootstrap-social": "^5.1.1",
     "bootswatch": "^3.3.7",
+    "browserify": "^14.4.0",
     "chalk": "^2.1.0",
     "cheerio": "^1.0.0-rc.2",
     "clockwork": "^0.1.4",
@@ -42,7 +44,6 @@
     "github": "^9.2.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
-    "gulp-babel": "^7.0.0",
     "gulp-clean-css": "^3.9.0",
     "gulp-concat": "^2.6.1",
     "gulp-if": "^2.0.2",
@@ -76,11 +77,12 @@
     "request": "^2.81.0",
     "run-sequence": "^2.2.0",
     "stripe": "^4.24.0",
-    "through2": "^2.0.3",
     "tumblr.js": "^1.1.1",
     "twilio": "^3.6.3",
     "twit": "^2.2.9",
-    "validator": "^8.0.0"
+    "validator": "^8.0.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
   },
   "devDependencies": {
     "chai": "^4.1.1",

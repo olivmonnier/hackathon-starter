@@ -8,7 +8,7 @@ html
     meta(name='csrf-token', content=_csrf)
     title #{title} - Hackathon Starter
     link(rel='shortcut icon', href='/favicon.png')
-    link(rel='stylesheet', href='/css/main.css')
+    link(rel='stylesheet', href='/dist/css/main.css')
 
   body
     include partials/header
@@ -19,8 +19,8 @@ html
 
     include partials/footer
 
-    script(src='/js/vendors.js')
-    script(src='/js/main.js')
+    script(src='/dist/js/vendors.js')
+    script(src='/dist/js/main.js')
 
     // Google Analytics: change UA-XXXXX-X to be your site's ID
     script.

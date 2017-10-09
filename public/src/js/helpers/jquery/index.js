@@ -1,0 +1,9 @@
+import './jquery.fn.checked';
+import './jquery.fn.disabled';
+import './jquery.fn.exists';
+import './jquery.fn.gotop';
+import './jquery.fn.replaceclass';
+import './jquery.fn.serializejson';
+import './jquery.uri';
+import './jquery.urlhash';
+import './jquery.urlparams';

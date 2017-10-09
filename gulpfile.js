@@ -4,19 +4,21 @@ const autoprefixer = require('gulp-autoprefixer');
 const sourcemaps = require('gulp-sourcemaps');
 const cleanCss = require('gulp-clean-css');
 const gulpif = require('gulp-if');
-const babel = require('gulp-babel');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
-const through = require('through2');
 const gls = require('gulp-live-server');
 const del = require('del');
+const babelify = require('babelify');
+const browserify = require('browserify');
+const buffer = require('vinyl-buffer');
+const source = require('vinyl-source-stream');
 const runSequence = require('run-sequence');
 
 const isEnvProduction = process.NODE_ENV === 'production';
 
 const dirs = {
-  src: 'public',
-  dest: 'public'
+  src: 'public/src',
+  dest: 'public/dist'
 }
 
 const sassPaths = {
@@ -25,7 +27,7 @@ const sassPaths = {
 }
 
 const jsPaths = {
-  src: `${dirs.src}/js/src/**/*.js`,
+  src: `${dirs.src}/js/main.js`,
   dest: `${dirs.dest}/js/`
 }
 
@@ -35,10 +37,7 @@ const vendorSrc = [
 ]
 
 const cleanFolders = [
-  '/public/**/*',
-  '!public/sass',
-  '!public/js/src',
-  '!public/favicon.png'
+  'public/dist'
 ]
 
 const fontsPaths = {
@@ -50,13 +49,6 @@ const fontsPaths = {
     src: './node_modules/bootstrap-sass/assets/fonts/bootstrap/**/*',
     dest: `${dirs.dest}/fonts/bootstrap/`
   }
-}
-
-const logFileJsHelpers = () => {
-  return through.obj((file, enc, cb) => {
-    console.log(file.babel.usedHelpers);
-    cb(null, file)
-  });
 }
 
 gulp.task('clean', () => {
@@ -74,11 +66,17 @@ gulp.task('styles', () => {
 })
 
 gulp.task('js', () => {
-  return gulp.src(jsPaths.src)
-    .pipe(sourcemaps.init())
-    .pipe(babel())
-    .pipe(logFileJsHelpers())
-    .pipe(concat('main.js'))
+  const bundler = browserify({
+    entries: jsPaths.src,
+    debug: true
+  })
+  bundler.transform(babelify);
+
+  bundler.bundle()
+    .on('error', function (err) { console.error(err) })
+    .pipe(source('main.js'))
+    .pipe(buffer())
+    .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(gulpif(isEnvProduction, uglify()))
     .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(jsPaths.dest))
@@ -110,7 +108,7 @@ gulp.task('server', ['build'], () => {
 
   server.start()
   gulp.watch(`${dirs.src}/sass/**/*.scss`, ['styles'])
-  gulp.watch(`${dirs.src}/js/src/**/*.js`, ['js'])
+  gulp.watch(`${dirs.src}/js/**/*.js`, ['js'])
 })
 
 gulp.task('build', () => {
