@@ -49,6 +49,11 @@ const cleanFolders = [
   'public/dist'
 ]
 
+const filesToCopy = [
+  `${dirs.src}/favicon.png`,
+  `${dirs.src}/sw.js`
+]
+
 const fontsPaths = {
   fontAwesome: {
     src: './node_modules/font-awesome/fonts/**/*',
@@ -87,7 +92,7 @@ gulp.task('js', () => {
   })
   bundler.transform(babelify);
 
-  bundler.bundle()
+  return bundler.bundle()
     .on('error', function (err) { console.error(err) })
     .pipe(source('main.js'))
     .pipe(buffer())
@@ -106,15 +111,16 @@ gulp.task('vendors', () => {
     .pipe(gulp.dest(jsPaths.dest))
 })
 
+gulp.task('copy', () => {
+  return gulp.src(filesToCopy)
+    .pipe(gulp.dest(dirs.dest))
+})
+
 gulp.task('bundle-sw', () => {
   return wbBuild.generateSW({
     globDirectory: './public/dist/',
     swDest: './public/dist/sw.js',
-    globPatterns: ['**\/*.{html,js,css}'],
-    //globIgnores: ['admin.html'],
-    templatedUrls: {
-      '/shell': ['shell.hbs', 'main.css', 'shell.css']
-    }
+    globPatterns: ['**\/*.{html,js,css,eot,svg,ttf,woff,woff2}'],
   })
   .then(() => {
     console.log('Service worker generated.');
@@ -147,7 +153,7 @@ gulp.task('server', ['build'], () => {
 gulp.task('build', () => {
   return runSequence(
     'clean', 
-    ['images', 'vendors', 'fonts', 'styles', 'js'],
+    ['images', 'styles', 'js', 'vendors', 'fonts', 'copy'],    
     'bundle-sw'
   )}
 );

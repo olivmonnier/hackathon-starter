@@ -8,7 +8,7 @@ html
     meta(name='csrf-token', content=_csrf)
     title #{title} - Hackathon Starter
     link(rel='shortcut icon', href='/favicon.png')
-    link(rel='stylesheet', href='/dist/css/main.css')
+    link(rel='stylesheet', href='/css/main.css')
 
   body
     include partials/header
@@ -19,8 +19,17 @@ html
 
     include partials/footer
 
-    script(src='/dist/js/vendors.js')
-    script(src='/dist/js/main.js')
+    script(src='/js/vendors.js')
+    script(src='/js/main.js')
+
+    script.
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').then(function(reg) {
+          console.log('Registration succeeded.');
+        }).catch(function(error) {
+          console.log('Registration failed with ' + error);
+        })
+      }
 
     // Google Analytics: change UA-XXXXX-X to be your site's ID
     script.

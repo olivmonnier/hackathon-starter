@@ -92,7 +92,7 @@ app.use((req, res, next) => {
   }
   next();
 });
-app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
+app.use(express.static(path.join(__dirname, 'public/dist/'), { maxAge: 31557600000 }));
 
 const routes = require('./routes');
 app.use('/', routes);

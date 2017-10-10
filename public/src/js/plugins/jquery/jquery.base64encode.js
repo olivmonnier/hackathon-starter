@@ -1,4 +1,4 @@
-jQuery.base64Encode.js = function (input) {
+jQuery.base64Encode = function (input) {
   const keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 
   let output = '';
